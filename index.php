@@ -50,7 +50,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case 'DELETE':
     default:
         parse_str(parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY), $params);
-        $pattern = (($name = key($params['pattern'])) ? $name . ".phtml" : "index.phtml");
+        $pattern = (($name = end($route)) ? $name . ".phtml" : "index.phtml");
 }
 echo get($pattern, array('params'=> $params, 'header' => $header, 'route'=> $route));
 exit(1);
