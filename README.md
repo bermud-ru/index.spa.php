@@ -1,6 +1,6 @@
 # index.spa.php
 
-{
+`{
     "repositories": [
     {
 	"url": "git@github.com:bermud-ru/index.spa.php.git",
@@ -19,4 +19,4 @@
 	"./vendor/bermud-ru/index.spa.php/post-update"
 	]
     }
-}
+}`
