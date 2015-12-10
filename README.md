@@ -1,5 +1,6 @@
 # index.spa.php
 
+composer.json
 ```
 {
     "repositories": [
