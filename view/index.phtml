@@ -1,4 +1,10 @@
-<?php if (in_array($_SERVER['REQUEST_METHOD'], array('GET','DELETE'))): ?>
+<?php
+namespace Application;
+if (in_array($_SERVER['REQUEST_METHOD'], array('POST'))) {
+    $json(array('result'=>'error', 'message'=> 'Exaple flash error message'));
+}
+$next = 'index';
+$page['GET']['header'][] = <<<EOT
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -6,7 +12,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="description" content="Simple framework base on index.php"/>
+    <meta name="description" content="git@github.com:bermud-ru/index.spa.php.git"/>
     <meta name="author" content="Андрей Новиков <bermud@nm.ru>"/>
     <script type="text/javascript"
             src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" charset="UTF-8"></script>
@@ -19,27 +25,30 @@
     <link href="/css/index.css" rel="stylesheet" />
     <title>Simple framework base on index.php</title>
 </head>
+EOT;
+$page['GET']['body'][] = <<<EOT
 <body>
 <div id="app" role="application">
     <div class="container" role="workspace">
         <div class="jumbotron panel panel-default">
-<?php endif; ?>
+EOT;
+$page['POST']['body'][] = $page['GET']['body'][] = <<<EOT
             <form action="/index.php" method="post" datatype="html">
                 <div class="row">
-                    <h5>Caption spa frame</h5>
+                    <h5>Caption SPA frame</h5>
                 </div>
                 <div class="row jumbotron-padding">
-                    <label class="radio-inline"><input type="radio" name="json[radioGroup]" value="1" checked="checked"> radio param #1</label>
-                    <label class="radio-inline"><input type="radio" name="json[radioGroup]" value="2"> radio param #2</label>
+                    <label class="radio-inline"><input type="radio" name="{$next}[radioGroup]" value="1" checked="checked"> radio param #1/label>
+                    <label class="radio-inline"><input type="radio" name="{$next}[radioGroup]" value="2"> radio param #2</label>
                 </div>
                 <div class="row jumbotron-padding">
-                    <h4>Choose date</h4>
+                    <h4>Choose date/h4>
                     <div class="col-sm-3"></div>
                     <div class="col-sm-6 ">
                         <div class="form-group">
                             <div class='input-group date datetimepicker'>
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                <input type='text' class="form-control" name="json[date]" />
+                                <input type='text' class="form-control" name="{$next}[birfday]" />
                             </div>
                         </div>
                     </div>
@@ -54,7 +63,8 @@
                     $('.input-group.date.datetimepicker').datepicker('update', new Date());
                 });
             </script>
-<?php if (in_array($_SERVER['REQUEST_METHOD'], array('GET','DELETE'))): ?>
+EOT;
+$page['GET']['body'][] = <<<EOT
         </div>
     </div>
 </div>
@@ -105,5 +115,9 @@ if (!ajaxProcess) {
 }(jQuery, window));
 </script>
 </body>
+EOT;
+$page['GET']['footer'][] = <<<EOT
 </html>
-<?php endif; ?>
+EOT;
+array_walk_recursive($page[$_SERVER['REQUEST_METHOD']], function($item){ echo $item; });
+?>

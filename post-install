@@ -3,6 +3,7 @@
 echo "Post-install scripting ..."
 mkdir -p ./public/css
 mkdir -p ./view
-cp ./vendor/bermud-ru/index.spa.php/*.php ./public/
+cp ./vendor/bermud-ru/index.spa.php/index.php ./public/
+cp ./vendor/bermud-ru/index.spa.php/config.php ./
 cp ./vendor/bermud-ru/index.spa.php/css/* ./public/css/
 cp ./vendor/bermud-ru/index.spa.php/view/* ./view/
