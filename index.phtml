@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content="Андрей Новиков <bermud@nm.ru>"/>
+    <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" charset="UTF-8"></script>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet" />
+    <script type="text/javascript"
+            src="http://netdna.bootstrapcdn.com/twitter-bootstrap/3.3.1/js/bootstrap.min.js" charset="UTF-8"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js" charset="UTF-8"></script>
+    <link href="/css/index.css" rel="stylesheet" />
+    <title>Расчёт размера ежемесячного пособия по уходу за ребёнком</title>
+</head>
+<body>
+<div id="app" role="application">
+    <div class="container" role="workspace">
+        <div class="jumbotron panel panel-default">
+            <form action="/index.php" method="post" datatype="html">
+                <div class="row">
+                    <h5>Укажите информацию о ребёнке</h5>
+                </div>
+                <div class="row jumbotron-padding">
+                    <label class="radio-inline"><input type="radio" name="step1[countChildren]" value="1" checked="checked"> Первый ребёнок</label>
+                    <label class="radio-inline"><input type="radio" name="step1[countChildren]" value="2"> Второй ребёнок (или следующие)</label>
+                </div>
+                <div class="row jumbotron-padding">
+                    <h4>Дата рождения</h4>
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6 ">
+                        <div class="form-group">
+                            <div class='input-group date datetimepicker'>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                <input type='text' class="form-control" name="step1[birfday]" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+                <div class="row next hrcolor">
+                    <div class="form-group nextStep"><span>Следующий шаг</span><i class="glyphicon glyphicon-play-circle"></i></div>
+                </div>
+            </form>
+            <script type="text/javascript">
+                $(function () {
+                    $('.input-group.date.datetimepicker').datepicker('update', new Date());
+                });
+            </script>
+        </div>
+    </div>
+</div>
+<div class="alert alert-danger" style="display: none;">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <span class="result"></span> <span class="message"></span>
+</div>
+<script type="text/javascript">
+(function ( $, window, undefined ) {
+'use strict';
+var ajaxProcess = false, owner = null;
+function flashMsg(data){
+    var self = $('.alert.alert-danger');
+    self.find('span.result').html(data.result);
+    self.find('span.message').html(data.message);
+    self.show().delay(1000).fadeOut('slow');
+    return false;
+}
+$('.jumbotron.panel.panel-default').on('click', '.nextStep', function(e){
+if (!ajaxProcess) {
+    ajaxProcess = true;
+    owner = $(e.delegateTarget);
+    owner.fadeOut(function() {
+        var form = owner.find('form');
+        if (form.length) $.ajax({
+                url: form.attr('action'),
+                type: form.attr('method') || 'post',
+                dataType: form.attr('datatype') || 'html',
+                data: form.serialize(),
+            }).fail(function () {
+                flashMsg({result:'error', message:'Произошла ошибка передачи данных!'});
+                owner.fadeIn();
+                ajaxProcess = false;
+            }).done(function (data) {
+                ajaxProcess = false;
+                try {
+                    var json = JSON.parse(data);
+                } catch (e) {
+                    owner.html(data).fadeIn();
+                    return false;
+                }
+                flashMsg(json);
+                owner.fadeIn();
+            });
+    });
+}
+});
+}(jQuery, window));
+</script>
+</body>
+</html>
