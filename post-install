@@ -1,0 +1,6 @@
+#!/bin/sh
+
+echo "Post-install scripting ..."
+mkdir -p ./css
+mkdir -p ./view
+cp ./vendor/bermud-ru/index.spa.php/*.php ./
