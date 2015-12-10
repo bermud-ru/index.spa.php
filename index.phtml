@@ -1,6 +1,4 @@
-<?php
-if (in_array($_SERVER['REQUEST_METHOD'], array('GET','DELETE'))):
-?>
+<?php if (in_array($_SERVER['REQUEST_METHOD'], array('GET','DELETE'))): ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -25,9 +23,7 @@ if (in_array($_SERVER['REQUEST_METHOD'], array('GET','DELETE'))):
 <div id="app" role="application">
     <div class="container" role="workspace">
         <div class="jumbotron panel panel-default">
-<?php
-endif;
-?>
+<?php endif; ?>
             <form action="/index.php" method="post" datatype="html">
                 <div class="row">
                     <h5>Caption spa frame</h5>
@@ -58,9 +54,7 @@ endif;
                     $('.input-group.date.datetimepicker').datepicker('update', new Date());
                 });
             </script>
-<?php
-if (in_array($_SERVER['REQUEST_METHOD'], array('GET','DELETE'))):
-?>
+<?php if (in_array($_SERVER['REQUEST_METHOD'], array('GET','DELETE'))): ?>
         </div>
     </div>
 </div>
@@ -112,6 +106,4 @@ if (!ajaxProcess) {
 </script>
 </body>
 </html>
-<?php
-endif;
-?>
+<?php endif; ?>
