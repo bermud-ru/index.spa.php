@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "Post-install scripting ..."
-mkdir -p ./css
+mkdir -p ./public/css
 mkdir -p ./view
 cp ./vendor/bermud-ru/index.spa.php/*.php ./public/
 cp ./vendor/bermud-ru/index.spa.php/css/* ./public/css/
