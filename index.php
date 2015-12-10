@@ -16,7 +16,8 @@ namespace Application;
  * @return string
  */
 function get($pattern, array $options = array()){
-    extract($options); ob_start(); @require($pattern);
+    $path = 'view/'.$pattern;
+    extract($options); ob_start(); @require($path);
     return ob_get_clean();
 }
 
