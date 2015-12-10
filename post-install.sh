@@ -1,3 +1,4 @@
 #!/bin/sh
 
-mkdir ./test1
+mkdir -p ./test1
+echo 1
