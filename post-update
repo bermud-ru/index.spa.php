@@ -2,4 +2,6 @@
 
 echo "Post-update scripting ..."
 cp ./vendor/bermud-ru/index.spa.php/index.php ./public/
-cp ./vendor/bermud-ru/index.spa.php/config.php ./
+cp -n ./vendor/bermud-ru/index.spa.php/config.php ./
+cp -n ./vendor/bermud-ru/index.spa.php/css/* ./public/css/
+cp -n ./vendor/bermud-ru/index.spa.php/view/* ./view/
