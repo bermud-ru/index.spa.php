@@ -1,4 +1,4 @@
 #!/bin/sh
 
 echo "Post-update scripting ..."
-cp ./vendor/bermud-ru/index.spa.php/*.php ./
+cp ./vendor/bermud-ru/index.spa.php/*.php ./public/
