@@ -1,7 +1,7 @@
 <?php
 namespace Application;
 if (in_array($_SERVER['REQUEST_METHOD'], array('POST'))) {
-    $json(array('result'=>'error', 'message'=> 'Exaple flash error message'));
+    $json(array('result'=>'error', 'message'=> 'Example flash error message'));
 }
 $next = 'index';
 $page['GET']['header'][] = <<<EOT
