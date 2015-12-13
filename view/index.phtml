@@ -1,7 +1,7 @@
 <?php
 namespace Application;
 if (in_array($_SERVER['REQUEST_METHOD'], array('POST'))) {
-    $json(array('result'=>'error', 'message'=> 'Exaple flash error message'));
+    $json(array('result'=>'error', 'message'=> 'Example flash error message'));
 }
 $next = 'index';
 $page['GET']['header'][] = <<<EOT
@@ -22,6 +22,8 @@ $page['GET']['header'][] = <<<EOT
             src="http://netdna.bootstrapcdn.com/twitter-bootstrap/3.3.1/js/bootstrap.min.js" charset="UTF-8"></script>
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js" charset="UTF-8"></script>
+    <script type="text/javascript"
+            src="https://cdn.jsdelivr.net/handlebarsjs/4.0.5/handlebars.min.js" charset="UTF-8"></script>
     <link href="/css/index.css" rel="stylesheet" />
     <title>Simple framework base on index.php</title>
 </head>
@@ -69,18 +71,18 @@ $page['GET']['body'][] = <<<EOT
     </div>
 </div>
 <div class="alert alert-danger" style="display: none;">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-    <span class="result"></span> <span class="message"></span>
 </div>
+<script id="alert-danger" type="text/x-handlebars-template">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <span class="result">{{error}}</span> <span class="message">{{message}}</span>
+</script>
 <script type="text/javascript">
 (function ( $, window, undefined ) {
 'use strict';
 var ajaxProcess = false, owner = null;
 function flashMsg(data){
-    var self = $('.alert.alert-danger');
-    self.find('span.result').html(data.result);
-    self.find('span.message').html(data.message);
-    self.show().delay(1000).fadeOut('slow');
+    template = Handlebars.compile($("#alert-danger").html());
+    $('.alert.alert-danger').html(template(data)).show().delay(1000).fadeOut('slow');
     return false;
 }
 $('.jumbotron.panel.panel-default').on('click', '.nextStep', function(e){
