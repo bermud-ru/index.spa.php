@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# @category install script
+# @author Андрей Новиков <andrey@novikov.be>
+# @data 07/12/2015
+
 echo "Post-install scripting ..."
 mkdir -p ./public/css
 mkdir -p ./view

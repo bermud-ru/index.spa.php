@@ -3,7 +3,7 @@
  * index.php
  *
  * @category SPA
- * @author Андрей Новиков <bermud@nm.ru>
+ * @author Андрей Новиков <andrey@novikov.be>
  * @data 07/12/2015
  *
  */
