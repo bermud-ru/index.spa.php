@@ -1,16 +1,8 @@
 <?php
-/**
- * index.phtml
- *
- * @category SPA
- * @author Андрей Новиков <andrey@novikov.be>
- * @data 07/12/2015
- *
- */
 
 namespace Application;
 if (in_array($_SERVER['REQUEST_METHOD'], array('POST'))) {
-    $json(array('result'=>'error', 'message'=> 'Example flash error message'));
+    if ($error) $json(array('result'=>'error', 'message'=> $error['message']));
 }
 $next = 'index';
 $page['GET']['header'][] = <<<EOT
@@ -35,6 +27,7 @@ $page['GET']['header'][] = <<<EOT
             src="https://cdn.jsdelivr.net/handlebarsjs/4.0.5/handlebars.min.js" charset="UTF-8"></script>
     <link href="/css/index.css" rel="stylesheet" />
     <title>Simple framework base on index.php</title>
+
     <script id="handlebars-alert" type="text/x-handlebars-template">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
     <span class="result">{{error}}</span> <span class="message">{{message}}</span>

@@ -22,7 +22,11 @@ function get($pattern, array $options = array())
 {
     global $config;
     $path = (isset($config['view']) ? $config['view'] : '') . $pattern;
-    extract($options); ob_start(); @require($path);
+    if (!file_exists($path)) {
+        $options['error'] = array('message'=> "File [$pattern] not found");
+        $path = (isset($config['view']) ? $config['view'] : '') . $config['pattern']();
+    }
+    extract($options); ob_start(); require($path);
     return ob_get_clean();
 }
 
