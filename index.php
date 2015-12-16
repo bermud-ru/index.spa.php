@@ -15,9 +15,13 @@ namespace Application;
  * @param array $options
  * @return string
  */
+
+$config = require('../config.php') || new \stdClass();
+
 function get($pattern, array $options = array())
 {
-    $path = '../view/'.$pattern;
+    global $config;
+    $path = $config->view . $pattern;
     extract($options); ob_start(); @require($path);
     return ob_get_clean();
 }
@@ -36,8 +40,7 @@ function __getAllHeaders($params)
     return $headers;
 }
 
-$config = require('../config.php');
-$route = array_filter(explode("/", substr(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH),1)));
+$route =  $config->route(array_filter(explode("/", substr(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH),1))));
 $header = (function_exists('getallheaders')) ? getallheaders() : __getAllHeaders($_SERVER);
 $params = array();
 switch ($_SERVER['REQUEST_METHOD'])
@@ -45,15 +48,15 @@ switch ($_SERVER['REQUEST_METHOD'])
     case 'PUT':
     case 'POST':
         parse_str(file_get_contents('php://input'), $params);
-        $pattern = (($name = key($params)) ? $name . '.phtml' : 'index.phtml');
+        $pattern = $config->pattern($name = key($params));
         break;
     case 'GET':
     case 'DELETE':
     default:
         parse_str(parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY), $params);
-        $pattern = (($name = current($route)) ? $name . '.phtml' : 'index.phtml');
+        $pattern = $config->pattern(current($route));
 }
-echo get($pattern, array(
+if ($pattern) echo get($pattern, array(
     'params' => $params,
     'header' => $header,
     'route' => $route,
